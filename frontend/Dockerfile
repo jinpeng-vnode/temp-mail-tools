@@ -7,7 +7,7 @@ COPY . .
 RUN yarn build
 
 # 最终镜像：将构建产物复制到共享 volume
-FROM alpine:3.20
+FROM alpine:latest
 COPY --from=builder /app/dist /app/dist
 VOLUME /app/dist
 CMD ["cp", "-r", "/app/dist/.", "/usr/share/nginx/html/"]
