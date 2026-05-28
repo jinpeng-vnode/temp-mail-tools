@@ -6,9 +6,10 @@ from __future__ import annotations
 
 import json
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from fastapi.responses import Response
 
+from app.exceptions import AppError
 from app.models import EmailListResponse, EmailSummary, EmailDetail, EmailAttachment
 from app.storage import get_mailbox, get_emails, get_email, get_attachment
 from app.utils.sanitizer import sanitize_html
@@ -21,10 +22,7 @@ async def list_emails(token: str, page: int = 1, size: int = 20):
     """获取邮件列表（分页）"""
     mailbox = await get_mailbox(token)
     if not mailbox:
-        raise HTTPException(status_code=404, detail={
-            "code": "MAILBOX_NOT_FOUND",
-            "message": "邮箱不存在或已过期",
-        })
+        raise AppError(404, "MAILBOX_NOT_FOUND", "邮箱不存在或已过期")
 
     emails_data, total = await get_emails(token, page, size)
     items = []
@@ -48,17 +46,11 @@ async def get_email_detail(token: str, email_id: str):
     """获取邮件详情"""
     mailbox = await get_mailbox(token)
     if not mailbox:
-        raise HTTPException(status_code=404, detail={
-            "code": "MAILBOX_NOT_FOUND",
-            "message": "邮箱不存在或已过期",
-        })
+        raise AppError(404, "MAILBOX_NOT_FOUND", "邮箱不存在或已过期")
 
     data = await get_email(email_id)
     if not data:
-        raise HTTPException(status_code=404, detail={
-            "code": "EMAIL_NOT_FOUND",
-            "message": "邮件不存在",
-        })
+        raise AppError(404, "EMAIL_NOT_FOUND", "邮件不存在")
 
     # 净化 HTML 内容
     html_body = sanitize_html(data.get("html_body") or "") or None
@@ -92,17 +84,11 @@ async def download_attachment(token: str, email_id: str, filename: str):
     """下载附件"""
     mailbox = await get_mailbox(token)
     if not mailbox:
-        raise HTTPException(status_code=404, detail={
-            "code": "MAILBOX_NOT_FOUND",
-            "message": "邮箱不存在或已过期",
-        })
+        raise AppError(404, "MAILBOX_NOT_FOUND", "邮箱不存在或已过期")
 
     content = await get_attachment(email_id, filename)
     if not content:
-        raise HTTPException(status_code=404, detail={
-            "code": "ATTACHMENT_NOT_FOUND",
-            "message": "附件不存在",
-        })
+        raise AppError(404, "ATTACHMENT_NOT_FOUND", "附件不存在")
 
     # 从邮件元数据获取 content_type
     data = await get_email(email_id)

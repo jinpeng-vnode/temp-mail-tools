@@ -13,6 +13,7 @@ from loguru import logger
 
 from app.config import settings
 from app.cleaner import start_cleaner
+from app.exceptions import AppError, app_error_handler
 from app.routers import mailbox, emails
 from app.smtp_server import start_smtp_server, stop_smtp_server
 from app.storage import close_redis, get_mailbox
@@ -49,6 +50,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# 注册自定义异常处理器
+app.add_exception_handler(AppError, app_error_handler)
 
 # 挂载路由
 app.include_router(mailbox.router)
