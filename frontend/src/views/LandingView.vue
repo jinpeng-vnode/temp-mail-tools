@@ -3,6 +3,9 @@
     <a-skeleton v-if="loading" active :paragraph="{ rows: 8 }" />
 
     <template v-else-if="landingData">
+      <!-- SEO Head -->
+      <SeoHead :title="landingData.title" :description="landingData.description" />
+
       <!-- Hero 区 -->
       <section class="landing-hero">
         <h1>{{ landingData.title }}</h1>
@@ -65,6 +68,7 @@ import { defineComponent, ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import MailboxGenerator from '../components/mailbox/MailboxGenerator.vue'
+import SeoHead from '../components/seo/SeoHead.vue'
 
 interface LandingData {
   title: string
@@ -74,7 +78,7 @@ interface LandingData {
 
 export default defineComponent({
   name: 'LandingView',
-  components: { MailboxGenerator },
+  components: { MailboxGenerator, SeoHead },
   setup() {
     const route = useRoute()
     const router = useRouter()

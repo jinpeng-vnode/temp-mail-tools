@@ -1,6 +1,8 @@
 <template>
   <div class="home-view">
+    <SeoHead :title="$t('mailbox.title') + ' - Temp Mail'" :description="$t('inbox.emptyHint')" />
     <MailboxGenerator />
+    <AdSlot slot="header-banner" />
     <InboxList :ws-status="wsStatus" />
   </div>
 </template>
@@ -11,11 +13,13 @@ import { useMailboxStore } from '../stores/mailbox'
 import { useWebSocket } from '../composables/useWebSocket'
 import MailboxGenerator from '../components/mailbox/MailboxGenerator.vue'
 import InboxList from '../components/mailbox/InboxList.vue'
+import AdSlot from '../components/ads/AdSlot.vue'
+import SeoHead from '../components/seo/SeoHead.vue'
 import type { WsMessage } from '../types'
 
 export default defineComponent({
   name: 'HomeView',
-  components: { MailboxGenerator, InboxList },
+  components: { MailboxGenerator, InboxList, AdSlot, SeoHead },
   setup() {
     const store = useMailboxStore()
     const wsStatus = ref<'connecting' | 'connected' | 'disconnected'>('disconnected')
