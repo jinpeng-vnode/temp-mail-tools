@@ -1,0 +1,57 @@
+services:
+  backend:
+    build: ../backend
+    container_name: tempmail-backend
+    ports:
+      - "2525:25"
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - MAIL_DOMAINS=${MAIL_DOMAINS:-tempmail.dev}
+      - MAIL_EXPIRE_MINUTES=${MAIL_EXPIRE_MINUTES:-60}
+      - SMTP_HOST=0.0.0.0
+      - SMTP_PORT=25
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - CORS_ORIGINS=${CORS_ORIGINS:-*}
+      - CLEANER_INTERVAL=${CLEANER_INTERVAL:-60}
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  frontend:
+    build: ../frontend
+    container_name: tempmail-frontend-build
+    volumes:
+      - frontend_dist:/usr/share/nginx/html
+
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: tempmail-nginx
+    ports:
+      - "${HTTP_PORT:-8080}:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - frontend_dist:/usr/share/nginx/html:ro
+    depends_on:
+      - backend
+      - frontend
+    restart: unless-stopped
+
+  redis:
+    image: redis:7.4-alpine
+    container_name: tempmail-redis
+    volumes:
+      - redis_data:/data
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf:ro
+    command: redis-server /usr/local/etc/redis/redis.conf
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+    restart: unless-stopped
+
+volumes:
+  redis_data:
+  frontend_dist:
