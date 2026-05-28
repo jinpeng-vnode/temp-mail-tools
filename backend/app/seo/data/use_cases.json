@@ -1,0 +1,7 @@
+[
+  {"slug": "facebook-verification", "title_zh": "Facebook验证临时邮箱", "title_en": "Temp Email for Facebook Verification", "description_zh": "使用临时邮箱完成Facebook账号验证，保护您的真实邮箱隐私。", "description_en": "Use a temporary email to verify your Facebook account and protect your real email privacy."},
+  {"slug": "online-shopping", "title_zh": "网购临时邮箱", "title_en": "Temp Email for Online Shopping", "description_zh": "网购时使用临时邮箱注册，避免收到垃圾促销邮件。", "description_en": "Use a temporary email for online shopping registration to avoid spam."},
+  {"slug": "twitter-signup", "title_zh": "Twitter注册临时邮箱", "title_en": "Temp Email for Twitter Signup", "description_zh": "使用临时邮箱注册Twitter账号，无需暴露个人邮箱。", "description_en": "Sign up for Twitter with a temporary email without exposing your personal email."},
+  {"slug": "gaming", "title_zh": "游戏注册临时邮箱", "title_en": "Temp Email for Gaming", "description_zh": "游戏平台注册使用临时邮箱，保护个人信息安全。", "description_en": "Register on gaming platforms with a temporary email to protect your personal information."},
+  {"slug": "free-trial", "title_zh": "免费试用临时邮箱", "title_en": "Temp Email for Free Trials", "description_zh": "使用临时邮箱注册免费试用服务，无需担心后续骚扰。", "description_en": "Use a temporary email for free trial signups without worrying about follow-up spam."}
+]

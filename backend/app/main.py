@@ -14,7 +14,7 @@ from loguru import logger
 from app.config import settings
 from app.cleaner import start_cleaner
 from app.exceptions import AppError, app_error_handler
-from app.routers import mailbox, emails
+from app.routers import mailbox, emails, seo
 from app.smtp_server import start_smtp_server, stop_smtp_server
 from app.storage import close_redis, get_mailbox
 from app.ws_manager import ws_manager
@@ -57,6 +57,7 @@ app.add_exception_handler(AppError, app_error_handler)
 # 挂载路由
 app.include_router(mailbox.router)
 app.include_router(emails.router)
+app.include_router(seo.router)
 
 
 @app.get("/api/health")
