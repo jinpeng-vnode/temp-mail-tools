@@ -12,7 +12,7 @@ services:
       - SMTP_PORT=25
       - API_HOST=0.0.0.0
       - API_PORT=8000
-      - CORS_ORIGINS=${CORS_ORIGINS:-*}
+      - CORS_ORIGINS=${CORS_ORIGINS:-http://localhost:8080}
       - CLEANER_INTERVAL=${CLEANER_INTERVAL:-60}
     depends_on:
       redis:
