@@ -7,15 +7,20 @@ from __future__ import annotations
 import random
 import secrets
 import string
+import time
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 
 from app.config import settings
 from app.exceptions import AppError
 from app.models import MailboxCreateRequest, MailboxCreateResponse, Mailbox
-from app.storage import create_mailbox, get_mailbox, delete_mailbox
+from app.storage import create_mailbox, get_mailbox, delete_mailbox, get_redis
 
 router = APIRouter(prefix="/api/mailbox", tags=["mailbox"])
+
+# 限流配置：10次/分钟/IP
+_RATE_LIMIT = 10
+_RATE_WINDOW = 60
 
 
 def _generate_address(domain: str | None = None) -> tuple[str, str]:
@@ -31,8 +36,22 @@ def _generate_address(domain: str | None = None) -> tuple[str, str]:
 
 
 @router.post("", response_model=MailboxCreateResponse)
-async def generate_mailbox(body: MailboxCreateRequest | None = None):
+async def generate_mailbox(request: Request, body: MailboxCreateRequest | None = None):
     """生成临时邮箱"""
+    # Rate Limiting: 10次/分钟/IP
+    client_ip = request.client.host if request.client else "unknown"
+    r = await get_redis()
+    rate_key = f"rate:{client_ip}"
+    now = time.time()
+    pipe = r.pipeline()
+    pipe.zremrangebyscore(rate_key, 0, now - _RATE_WINDOW)
+    pipe.zcard(rate_key)
+    pipe.zadd(rate_key, {str(now): now})
+    pipe.expire(rate_key, _RATE_WINDOW)
+    results = await pipe.execute()
+    if results[1] >= _RATE_LIMIT:
+        raise AppError(429, "RATE_LIMITED", "请求过于频繁，请稍后再试")
+
     domain = body.domain if body else None
     address, token = _generate_address(domain)
     ttl = settings.mail_expire_minutes * 60
