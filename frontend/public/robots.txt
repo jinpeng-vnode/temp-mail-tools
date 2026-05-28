@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /email/
+Sitemap: /api/sitemap.xml
