@@ -82,19 +82,22 @@ async def delete_mailbox(token: str) -> bool:
     # 获取所有邮件ID
     email_ids = await r.zrange(f"emails:{token}", 0, -1)
 
+    # 预先收集所有附件信息（pipeline 外部）
+    attachments_map: dict[str, list[dict]] = {}
+    for eid in email_ids:
+        att_json = await r.hget(f"email:{eid}", "attachments_json")
+        if att_json:
+            attachments_map[eid] = json.loads(att_json)
+
+    # 统一在 pipeline 中执行删除
     pipe = r.pipeline()
-    # 删除邮箱
     pipe.delete(f"mailbox:{token}")
     pipe.delete(f"addr:{mailbox['address']}")
     pipe.delete(f"emails:{token}")
-    # 删除所有邮件和附件
     for eid in email_ids:
         pipe.delete(f"email:{eid}")
-        # 获取附件列表并删除
-        attachments_json = await r.hget(f"email:{eid}", "attachments_json")
-        if attachments_json:
-            for att in json.loads(attachments_json):
-                pipe.delete(f"attachment:{eid}:{att['filename']}")
+        for att in attachments_map.get(eid, []):
+            pipe.delete(f"attachment:{eid}:{att['filename']}")
     await pipe.execute()
 
     logger.info(f"删除邮箱: {mailbox['address']} (含 {len(email_ids)} 封邮件)")
