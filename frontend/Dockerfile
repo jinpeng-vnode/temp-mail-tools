@@ -4,7 +4,7 @@ WORKDIR /app
 COPY package.json yarn.lock* ./
 RUN yarn install --frozen-lockfile 2>/dev/null || yarn install
 COPY . .
-RUN yarn build
+RUN npx vite build
 
 # 最终镜像：将构建产物复制到共享 volume
 FROM alpine:latest
