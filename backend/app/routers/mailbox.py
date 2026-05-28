@@ -8,9 +8,10 @@ import random
 import secrets
 import string
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 
 from app.config import settings
+from app.exceptions import AppError
 from app.models import MailboxCreateRequest, MailboxCreateResponse, Mailbox
 from app.storage import create_mailbox, get_mailbox, delete_mailbox
 
@@ -49,10 +50,7 @@ async def get_mailbox_status(token: str):
     """查询邮箱状态"""
     data = await get_mailbox(token)
     if not data:
-        raise HTTPException(status_code=404, detail={
-            "code": "MAILBOX_NOT_FOUND",
-            "message": "邮箱不存在或已过期",
-        })
+        raise AppError(404, "MAILBOX_NOT_FOUND", "邮箱不存在或已过期")
     return Mailbox(
         address=data["address"],
         token=data["token"],
@@ -66,8 +64,5 @@ async def remove_mailbox(token: str):
     """删除邮箱及所有邮件"""
     success = await delete_mailbox(token)
     if not success:
-        raise HTTPException(status_code=404, detail={
-            "code": "MAILBOX_NOT_FOUND",
-            "message": "邮箱不存在或已过期",
-        })
+        raise AppError(404, "MAILBOX_NOT_FOUND", "邮箱不存在或已过期")
     return {"ok": True}
