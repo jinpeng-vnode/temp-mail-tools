@@ -1,0 +1,66 @@
+{
+  "mailbox": {
+    "title": "您的临时邮箱地址",
+    "copy": "复制",
+    "copied": "已复制",
+    "refresh": "换一个",
+    "expired": "已过期",
+    "generating": "生成中...",
+    "expiresIn": "过期倒计时"
+  },
+  "inbox": {
+    "title": "收件箱",
+    "empty": "等待邮件中...",
+    "emptyHint": "将临时邮箱地址粘贴到需要验证的网站",
+    "connected": "已连接",
+    "disconnected": "连接已断开",
+    "reconnecting": "正在重连..."
+  },
+  "email": {
+    "back": "返回收件箱",
+    "delete": "删除",
+    "deleteConfirm": "确定删除此邮箱及所有邮件？",
+    "attachment": "附件",
+    "download": "下载",
+    "from": "发件人",
+    "to": "收件人",
+    "time": "时间",
+    "subject": "主题"
+  },
+  "error": {
+    "generate": "生成邮箱失败，请刷新重试",
+    "load": "加载失败",
+    "retry": "重试",
+    "expired": "邮箱已过期，请生成新邮箱",
+    "notFound": "邮件不存在"
+  },
+  "notFound": {
+    "title": "页面不存在",
+    "desc": "您访问的页面已被删除或不存在",
+    "home": "返回首页"
+  },
+  "landing": {
+    "cta": "立即获取临时邮箱",
+    "features": "功能特点",
+    "privacy": "隐私保护",
+    "privacyDesc": "无需注册，不收集个人信息",
+    "instant": "即时接收",
+    "instantDesc": "邮件到达实时推送，无需刷新",
+    "autoDelete": "自动销毁",
+    "autoDeleteDesc": "邮箱到期自动删除所有数据",
+    "steps": "使用步骤",
+    "step1": "复制临时邮箱地址",
+    "step2": "粘贴到需要注册的网站",
+    "step3": "在此接收验证邮件",
+    "faq": "常见问题"
+  },
+  "footer": {
+    "about": "关于",
+    "privacy": "隐私政策",
+    "terms": "服务条款"
+  },
+  "theme": {
+    "light": "亮色模式",
+    "dark": "暗色模式"
+  }
+}

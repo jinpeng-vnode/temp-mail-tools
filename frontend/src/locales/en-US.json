@@ -1,0 +1,66 @@
+{
+  "mailbox": {
+    "title": "Your Temporary Email Address",
+    "copy": "Copy",
+    "copied": "Copied",
+    "refresh": "Refresh",
+    "expired": "Expired",
+    "generating": "Generating...",
+    "expiresIn": "Expires in"
+  },
+  "inbox": {
+    "title": "Inbox",
+    "empty": "Waiting for emails...",
+    "emptyHint": "Paste the temporary email address to the website you want to register",
+    "connected": "Connected",
+    "disconnected": "Disconnected",
+    "reconnecting": "Reconnecting..."
+  },
+  "email": {
+    "back": "Back to Inbox",
+    "delete": "Delete",
+    "deleteConfirm": "Are you sure to delete this mailbox and all emails?",
+    "attachment": "Attachments",
+    "download": "Download",
+    "from": "From",
+    "to": "To",
+    "time": "Time",
+    "subject": "Subject"
+  },
+  "error": {
+    "generate": "Failed to generate mailbox, please retry",
+    "load": "Failed to load",
+    "retry": "Retry",
+    "expired": "Mailbox expired, please generate a new one",
+    "notFound": "Email not found"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "desc": "The page you are looking for does not exist",
+    "home": "Back to Home"
+  },
+  "landing": {
+    "cta": "Get Temporary Email Now",
+    "features": "Features",
+    "privacy": "Privacy Protection",
+    "privacyDesc": "No registration required, no personal data collected",
+    "instant": "Instant Delivery",
+    "instantDesc": "Real-time email push notification",
+    "autoDelete": "Auto Destruct",
+    "autoDeleteDesc": "All data deleted when mailbox expires",
+    "steps": "How to Use",
+    "step1": "Copy the temporary email address",
+    "step2": "Paste it to the website you want to register",
+    "step3": "Receive verification emails here",
+    "faq": "FAQ"
+  },
+  "footer": {
+    "about": "About",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  },
+  "theme": {
+    "light": "Light Mode",
+    "dark": "Dark Mode"
+  }
+}
