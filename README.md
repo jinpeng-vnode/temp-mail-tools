@@ -1,5 +1,9 @@
 # Temp Mail Tools — 临时邮箱工具站
 
+> **已归档（2026-10-10）**
+>
+> 本仓库不再维护。公开临时邮箱小站停更，邮箱能力以 [mail-pool-service](https://github.com/jinpeng-vnode/mail-pool-service) 为准。
+
 ## 功能全景图 — 完成度: 85%
 
 > 项目定义：临时邮箱工具站，对标 Temp-Mail.org（46M月流量），提供一次性匿名邮箱服务，核心通过 Programmatic SEO 获取搜索流量
